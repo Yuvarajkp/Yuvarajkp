@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      background-color: #f7f9fc;
+    }
+    input, button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .error {
+      color: red;
+      background: #ffe0e0;
+      padding: 10px;
+      margin-bottom: 15px;
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 5px;
+    }
+    .login-box {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      width: 350px;
+      margin: auto;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h2>Welcome</h2>
+    <div id="error" class="error" style="display: none;"></div>
+    <input type="text" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Sign-in</button>
+    <a href="#">Forgot password?</a>
+  </div>
+
+  <script>
+    // Fake user database
+    const users = {
+      "joe.smith@gmail.com": "test123",
+      "alice@example.com": "alicepass",
+      "john.doe@gmail.com": "johnny123"
+    };
+
+    function login() {
+      const enteredEmail = document.getElementById("email").value.trim();
+      const enteredPassword = document.getElementById("password").value;
+
+      const errorBox = document.getElementById("error");
+      errorBox.style.display = "none";
+      errorBox.innerText = "";
+
+      // Check if the email and password match
+      if (users[enteredEmail] === enteredPassword) {
+        alert("Login successful!");
+        return;
+      }
+
+      // Check if password matches any user but email is wrong
+      for (let email in users) {
+        if (users[email] === enteredPassword && email !== enteredEmail) {
+          errorBox.style.display = "block";
+          errorBox.innerText = `You entered ${email.split('@')[0]}'s password, maybe your email is ${email}?`;
+          return;
+        }
+      }
+
+      // Normal wrong credentials
+      errorBox.style.display = "block";
+      errorBox.innerText = "Invalid email or password.";
+    }
+  </script>
+
+</body>
+</html>
